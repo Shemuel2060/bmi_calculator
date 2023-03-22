@@ -6,10 +6,10 @@ function App() {
   // state
   const [weight, setWeight] = useState(0);
   const [height, setHeight] = useState(0);
-  const [bmi, setBmi] = useState("");
+  const [bmi, setBmi] = useState(0);
   const [message, setMessage] = useState("")
 
-  let imgSrc = '';
+
 
   /**
    * computes the bmi using the standard formular. This is
@@ -23,10 +23,37 @@ function App() {
     if (weight === 0 || height === 0) {
       alert("Enter valid values, please. ")
     } else {
-      let bmi = { height }
-      setBmi(bmi);
+      let bmi = weight / (height * height);
+      // console.log(`bmi is ${bmi}`); // for testing
+      setBmi(bmi.toFixed(1));
+      if (bmi <= 18.5) {
+        setMessage("You are underweight")
+
+      } else if (bmi > 18.5 && bmi < 24.9) {
+        setMessage("You have normal weight")
+
+      } else if (bmi >= 25.0 && bmi < 29.9) {
+        setMessage("You are overweight")
+
+      } else {
+        setMessage("You are obese")
+
+      }
     }
   }
+  let imgSrc
+  if (bmi < 1) {
+    imgSrc = null;
+  } else if (bmi < 18.5) {
+    imgSrc = require("../src/assets/under.png")
+  } else if (bmi > 18.5 && bmi < 24.9) {
+    imgSrc = require("../src/assets/normal.png")
+  } else if (bmi >= 25.0 && bmi < 29.9) {
+    imgSrc = require("../src/assets/over.PNG")
+  } else {
+    imgSrc = require("../src/assets/obese.png")
+  }
+
 
   /**
    * reloads the scrren to the initial values, that is,
@@ -35,6 +62,12 @@ function App() {
   let reload = () => {
     window.location.reload();
   };
+
+  /**
+   * show images based on the bmi value
+   */
+
+
 
   return (
     <div className="App">
@@ -58,7 +91,7 @@ function App() {
 
         <div className="img-show">
           <h3>Your BMI is: {bmi}</h3>
-          <p>{message}</p>
+          <p><em>{message}</em></p>
 
           <img src={imgSrc} alt="" />
         </div>
