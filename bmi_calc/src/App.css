@@ -1,47 +1,87 @@
-. {
-  box-sizing: border-box;
+
+.{
+  box-sizing:content-box;
   margin: 0;
   padding: 0;
 }
-
-.App {
+.App{
+  width:100%;
+  height: 100%;
+  background-color: red;
+}
+/* .App {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items:center;
   width: 100%;
   height: 100vh;
+} */
+
+.title-container{  
+  float:left;
+  width:30px;
+  margin-left:150px;
+  margin-top:180px;
+  margin-right:400px;
+ 
+}
+.title-txt{
+  text-shadow: 3px 3px #efeff3;
+  
+  font-family: cursive;
+
 }
 
 .main-container {
-
-  box-shadow: 0px 0px 12px;
+  width:50%;
+  margin-left:600px; /*temporal*/ 
+  box-shadow: 0px 0px 2px;
   border-radius: 6px;
   padding: 1rem;
 }
-
-input {
-  width: 100%;
-  padding: 8px 2px;
-  margin: 8px 0;
-  border-radius: 10px;
+.name_labels {
+  display: inline-block;
+  vertical-align: middle;
+  width: 40%;
 }
 
+.frm {
+  width:40%;
+  display: inline-block;
+  vertical-align: middle;
+}
 .btn-submit,
 .btn-reload {
-  display: block;
-  width: 100%;
-  padding: 8px 0px;
-  margin-bottom: 10px;
+  display: inline-block;
+  width: auto;
+  padding: 8px 8px;
+  margin-bottom: 30px;
   border-radius: 10px;
   color: white;
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   background-color: black;
 }
 
 .btn-reload {
-  background-color: white;
-  color: #333;
+  margin-right: 10px;
+  margin-left:10px;
+}
+
+.btn-submit {
+  margin-left: 30px;
+}
+
+label {
+  display: inline;
+}
+
+input{ 
+  width: 70%; /* okay */
+  display:grid;
+  padding: 8px 2px;
+  margin: 8px 0;
+  border-radius: 10px;
 }
 
 p {
@@ -49,6 +89,24 @@ p {
 }
 
 .img-show {
+  
+  box-shadow: 0px 0px 5px;
+  border-radius: 5px;
+  padding: 0.75rem;
   height: 350px;
+  width:80%;
+  background-color: azure;
+}
+
+.img-show p {
+  text-align: center;
+}
+
+.img-show h3 {
+  text-align: center;
+  align-content: center;
+}
+
+.img-show img {
   align-items: center;
 }
