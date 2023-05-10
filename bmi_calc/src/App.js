@@ -1,5 +1,6 @@
 import "./App.css";
 import { useState } from 'react';
+import axios from 'axios';
 
 
 import HeightWeightInfo from "./components/metricData";
@@ -9,13 +10,41 @@ import overweight from "./assets/over.PNG";
 import obese from "./assets/obese.png";
 
 function App() {
+  const client = axios.create({
+  baseURL: "https://localhost:8080/patient/addPatient" 
+});
 
   // state
+   const [name, setName] = useState("");
+    const [age, setAge] = useState("");
+    const [sex, setSex] = useState("");
    const [weight, setWeight] = useState(0);
    const [height, setHeight] = useState(0);
    const [bmi, setBmi] = useState(0);
    const [message, setMessage] = useState("")
-   const [imgUrl,setImgUrl] = useState('');
+  const [imgUrl, setImgUrl] = useState('');
+  const [posts, setPosts] = useState([]);
+
+  const addPosts = (pName,pAge,pSex,pWeight,pHeight,pBMI) => {
+      client
+         .post('', {
+            name: pName,
+            age: pAge,
+            sex: pSex,
+            weight: pWeight,
+            height: pHeight,
+            bmi: pBMI
+         })
+         .then((response) => {
+            setPosts([response.data, ...posts]);
+         });
+      setName('');
+      setAge('');
+      setSex('');
+      setWeight();
+      setHeight();
+      setBmi('');
+   }; // end of addPosts() function
 
   return (
     <div className="App">
@@ -26,7 +55,8 @@ function App() {
       <div>
         <HeightWeightInfo
           className="height-weight"
-            let handleClick={
+          let handleClick={
+              
             /**
                 * computes the bmi using the standard formular. This is
                 * an event handler for the form submission buttons.
@@ -45,8 +75,7 @@ function App() {
                 setBmi(bmi.toFixed(1));
                 if (bmi <= 18.5) {
                   setMessage("You are underweight")
-                  setImgUrl(underweight)
-                 
+                  setImgUrl(underweight)                 
 
                 } else if (bmi > 18.5 && bmi < 24.9) {
                   setMessage("You have normal weight")
@@ -60,8 +89,12 @@ function App() {
                   setMessage("You are obese")
                   setImgUrl(obese)
                 }
+                
               }
-              }
+              addPosts(name,age,sex,weight,height,bmi); // posts data to the database
+              
+            }
+            
               
             }
             height={height}

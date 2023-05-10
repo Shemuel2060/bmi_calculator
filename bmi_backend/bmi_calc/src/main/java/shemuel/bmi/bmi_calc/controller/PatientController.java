@@ -3,6 +3,7 @@ package shemuel.bmi.bmi_calc.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,7 @@ import shemuel.bmi.bmi_calc.services.PatientServices;
 /*
  * This calass handles HTTP requests
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/patient")
 public class PatientController {
