@@ -3,6 +3,10 @@ import { useState } from 'react';
 
 
 import HeightWeightInfo from "./components/metricData";
+import underweight from "./assets/under.png";
+import normalweight from "./assets/normal.png";
+import overweight from "./assets/over.PNG";
+import obese from "./assets/obese.png";
 
 function App() {
 
@@ -16,57 +20,50 @@ function App() {
   return (
     <div className="App">
        <div className="title-container">
-        <h1 className="title-txt">BMI CALCULATOR</h1>   
+        <h1 className="title-txt">BMI CALCULATOR</h1>
       </div>
      
-      <div>                 
+      <div>
         <HeightWeightInfo
           className="height-weight"
-            let calcBMI={
+            let handleClick={
             /**
                 * computes the bmi using the standard formular. This is
                 * an event handler for the form submission buttons.
                 * prevent submitting to the server which is the default
                   behaviour of the form input
-                * @param {event} event 
+                * @param {event} event
             */
             (event) => {
               event.preventDefault();
               if (weight === 0 || height === 0) {
                 alert("Enter valid values, please. ")
+                setImgUrl('');
               } else {
                 let bmi = weight / (height * height);
                 // console.log(`bmi is ${bmi}`); // for testing
                 setBmi(bmi.toFixed(1));
                 if (bmi <= 18.5) {
                   setMessage("You are underweight")
+                  setImgUrl(underweight)
+                 
 
                 } else if (bmi > 18.5 && bmi < 24.9) {
                   setMessage("You have normal weight")
+                  setImgUrl(normalweight)
 
                 } else if (bmi >= 25.0 && bmi < 29.9) {
                   setMessage("You are overweight")
+                  setImgUrl(overweight)
 
                 } else {
                   setMessage("You are obese")
+                  setImgUrl(obese)
                 }
               }
-              }}
-          const imgSrc={
-            (bmi) => {
-              if (bmi < 1) {
-                  setImgUrl('');
-                } else if (bmi < 18.5) {
-                  setImgUrl("../src/assets/under.png")
-                } else if (bmi > 18.5 && bmi < 24.9) {
-                  setImgUrl("../src/assets/normal.png")
-                } else if (bmi >= 25.0 && bmi < 29.9) {
-                  setImgUrl("../src/assets/over.PNG")
-                } else {
-                  setImgUrl("../src/assets/obese.png")
               }
+              
             }
-          }
             height={height}
             weight={weight}
             bmi={bmi}
@@ -75,7 +72,7 @@ function App() {
             setWeight={setWeight}
             imgUrl={imgUrl}
             setImgUrl={setImgUrl}
-          /><br/>      
+          /><br/>
       </div>
       
     </div>
@@ -83,3 +80,6 @@ function App() {
 }
 
 export default App;
+
+
+
