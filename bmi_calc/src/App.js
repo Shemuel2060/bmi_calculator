@@ -54,16 +54,16 @@ function App() {
      
       <div>
         <HeightWeightInfo
-          className="height-weight"
-          let handleClick={
-              
-            /**
-                * computes the bmi using the standard formular. This is
+          className="height-weight"                
+          /**
+          * computes the bmi using the standard formular. This is
                 * an event handler for the form submission buttons.
                 * prevent submitting to the server which is the default
                   behaviour of the form input
                 * @param {event} event
-            */
+            
+           */
+          let handleClick={
             (event) => {
               event.preventDefault();
               if (weight === 0 || height === 0) {
@@ -93,8 +93,7 @@ function App() {
               }
               addPosts(name,age,sex,weight,height,bmi); // posts data to the database
               
-            }
-            
+            }           
               
             }
             height={height}
