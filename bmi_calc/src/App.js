@@ -10,24 +10,25 @@ import overweight from "./assets/over.PNG";
 import obese from "./assets/obese.png";
 
 function App() {
-  const client = axios.create({
-  baseURL: "https://localhost:8080/patient/addPatient" 
-});
 
   // state
-   const [name, setName] = useState("");
+    const [name, setName] = useState("");
     const [age, setAge] = useState("");
     const [sex, setSex] = useState("");
-   const [weight, setWeight] = useState(0);
-   const [height, setHeight] = useState(0);
-   const [bmi, setBmi] = useState(0);
-   const [message, setMessage] = useState("")
-  const [imgUrl, setImgUrl] = useState('');
-  const [posts, setPosts] = useState([]);
+    const [weight, setWeight] = useState('0');
+    const [height, setHeight] = useState('0');
+    const [bmi, setBmi] = useState(0.0);
+    const [message, setMessage] = useState("")
+    const [imgUrl, setImgUrl] = useState('');
+    const [posts, setPosts] = useState([]);
+  
+    const client = axios.create({
+  baseURL: "https://localhost:8080/patient/addPatient" 
+});  
 
   const addPosts = (pName,pAge,pSex,pWeight,pHeight,pBMI) => {
       client
-         .post('', {
+         .post('http://localhost:8080/patient/addPatient', {
             name: pName,
             age: pAge,
             sex: pSex,
@@ -38,12 +39,6 @@ function App() {
          .then((response) => {
             setPosts([response.data, ...posts]);
          });
-      setName('');
-      setAge('');
-      setSex('');
-      setWeight();
-      setHeight();
-      setBmi('');
    }; // end of addPosts() function
 
   return (
@@ -55,15 +50,7 @@ function App() {
       <div>
         <HeightWeightInfo
           className="height-weight"                
-          /**
-          * computes the bmi using the standard formular. This is
-                * an event handler for the form submission buttons.
-                * prevent submitting to the server which is the default
-                  behaviour of the form input
-                * @param {event} event
-            
-           */
-          let handleClick={
+          let handleClick={            
             (event) => {
               event.preventDefault();
               if (weight === 0 || height === 0) {
@@ -72,7 +59,7 @@ function App() {
               } else {
                 let bmi = weight / (height * height);
                 // console.log(`bmi is ${bmi}`); // for testing
-                setBmi(bmi.toFixed(1));
+                setBmi(bmi.toFixed(1)); // update the bmi value
                 if (bmi <= 18.5) {
                   setMessage("You are underweight")
                   setImgUrl(underweight)                 
@@ -89,26 +76,41 @@ function App() {
                   setMessage("You are obese")
                   setImgUrl(obese)
                 }
+                // update all the other values
+                setName(name)
+                setSex(sex) 
+                setAge(age)
+                setWeight(weight)
+                setHeight(height)
+                   
                 
               }
-              addPosts(name,age,sex,weight,height,bmi); // posts data to the database
               
+              addPosts(name, age, sex, weight, height, bmi); // posts data to the database
             }           
               
-            }
+          }
+          // update the the fields in the event handler 
+            setName={setName}
+            setAge={setAge}
+            setSex={setSex}
+            setBmi={setBmi}
+            setHeight={setHeight}
+            setWeight={setWeight}
+            setImgUrl={setImgUrl}
             height={height}
             weight={weight}
             bmi={bmi}
             message={message}
-            setHeight={setHeight}
-            setWeight={setWeight}
             imgUrl={imgUrl}
-            setImgUrl={setImgUrl}
+          
+          
           /><br/>
       </div>
       
     </div>
   );
+  
 }
 
 export default App;
