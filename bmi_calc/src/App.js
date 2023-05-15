@@ -57,9 +57,18 @@ function App() {
                 alert("Enter valid values, please. ")
                 setImgUrl('');
               } else {
+                // update all the  values
+                setName(name)
+                setSex(sex) 
+                setAge(age)
+                setWeight(weight)
+                setHeight(height)
+                // setBmi(n => n + (weight / (height * height)).toFixed(1))
                 let bmi = weight / (height * height);
-                // console.log(`bmi is ${bmi}`); // for testing
                 setBmi(bmi.toFixed(1)); // update the bmi value
+                
+                // console.log(`bmi is ${bmi}`); // for testing
+                
                 if (bmi <= 18.5) {
                   setMessage("You are underweight")
                   setImgUrl(underweight)                 
@@ -76,12 +85,7 @@ function App() {
                   setMessage("You are obese")
                   setImgUrl(obese)
                 }
-                // update all the other values
-                setName(name)
-                setSex(sex) 
-                setAge(age)
-                setWeight(weight)
-                setHeight(height)
+                
                    
                 
               }
@@ -90,7 +94,7 @@ function App() {
             }           
               
           }
-          // update the the fields in the event handler 
+          // declare all the state variables and srate functions as props to the child component
             setName={setName}
             setAge={setAge}
             setSex={setSex}
