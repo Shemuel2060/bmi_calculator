@@ -35,7 +35,7 @@ function HeightWeightInfo(props) {
                 <br />
             </div>
             <div className="frm">
-                <form  onSubmit={props.handleClick}>
+                <form  onSubmit={props.handleSubmit}>
                     <div >
                         <button className="btn-submit" type="submit">
                         Submit</button>
@@ -48,6 +48,12 @@ function HeightWeightInfo(props) {
                         <img src={props.imgUrl} alt="" height="250px" />
                     </div><br/>
                 </form>
+            </div>
+            <div className = 'output-data'>
+                <button onClick ={props.useGotData}>Get Patient Data</button>
+                <output>
+                    
+                </output>
             </div>
             
         </div>
