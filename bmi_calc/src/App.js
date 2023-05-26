@@ -77,6 +77,7 @@ function App() {
             
             (event) => {
               event.preventDefault();
+              let bmi_val = 0;
               if (weight === 0 || height === 0) {
                 alert("Enter valid values, please. ")
                 setImgUrl('');
@@ -91,7 +92,7 @@ function App() {
                 // setBmi(() => (weight / (height * height)).toFixed(1));
                 // console.log(`second bmi: ${bmi}`); 
                 
-                let bmi_val = (weight / (height * height)).toFixed(1);
+                bmi_val = (weight / (height * height)).toFixed(1);
                 setBmi(bmi_val); // update the bmi value
                 // console.log(`bmi is ${bmi}`); // for testing
                 
@@ -100,12 +101,12 @@ function App() {
                   setImgUrl(underweight)  
                   // setBmi(bmi_val)
 
-                } else if (bmi_val > 18.5 && bmi < 24.9) {
+                } else if (bmi_val > 18.5 && bmi_val < 24.9) {
                   setMessage("You have normal weight")
                   setImgUrl(normalweight)
                   // setBmi(bmi_val)
 
-                } else if (bmi_val >= 25.0 && bmi < 29.9) {
+                } else if (bmi_val >= 25.0 && bmi_val < 29.9) {
                   setMessage("You are overweight")
                   setImgUrl(overweight)
                   // setBmi(bmi_val)
@@ -116,8 +117,13 @@ function App() {
                   // setBmi(bmi_val)
                 }
               }
-              // setBmi(bmi_val);              
-              addpatient(name, age, sex, weight, height, bmi); // patient data to the database
+              if (bmi_val === 0) {
+                alert("invalid bmi value");
+              } else {
+                addpatient(name, age, sex, weight, height, bmi_val); // patient data to the database
+                alert("Record Successfully commited to DB"); // for testing
+              }
+              
               
             }           
               
