@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 
 
@@ -21,9 +21,11 @@ function App() {
     const [bmi, setBmi] = useState('0');
     const [message, setMessage] = useState("")
     const [imgUrl, setImgUrl] = useState('');
-    const [patient, setPatient] = useState([]);
+  const [patient, setPatient] = useState([]);
+  let allPatients={}; // all patients objects
+  // const [allPatients, setAllPatients] = useState([]);
   
-  console.log(`first bmi: ${bmi}`); // follow this value to see how it changed
+  // console.log(`first bmi: ${bmi}`); // follow this value to see how it changed
   
     const client = axios.create({
   baseURL: "https://localhost:8080/patient/" 
@@ -47,12 +49,24 @@ function App() {
   }; // end of addpatient() function
 
   // get data from endpoint when app loads
-  useEffect(() => {
-    client.get('http://localhost:8080/patient/getPatient')
+  const url_getall = 'http://localhost:8080/patient/'; // base url
+
+    axios.get(`${url_getall}getAllPatients`)
       .then((response) => {
-        setPatient(response.data)
+      allPatients = response.data // save data into this variable
       })
-  });
+      .catch((error) => {
+      console.log(`ERROR: ${error}`)
+      })  
+  
+  // this also works as the one above
+  
+  // useEffect(() => {
+  // axios.get(`${url_getall}getAllPatients`)
+  //   .then((response) => response.data)
+  //   .then((data) => setAllPatients(data))
+  //     .catch((error) => console.log(`ERROR: ${error}`))  
+  // });
  
     
     
@@ -64,7 +78,7 @@ function App() {
   return (
     <div className="App">
        <div className="title-container">
-        <h1 className="title-txt">BMI CALCULATOR</h1>
+        <h1 className="title-txt">BMI <br/>CALCULATOR</h1>
       </div>
      
       <div>
@@ -121,13 +135,14 @@ function App() {
                 alert("invalid bmi value");
               } else {
                 addpatient(name, age, sex, weight, height, bmi_val); // patient data to the database
-                alert("Record Successfully commited to DB"); // for testing
+                // alert("Record Successfully commited to DB"); // for testing
               }
               
               
             }           
               
-          }
+          } // end of handleSubmit function
+
           // declare all the state variables and state functions as props to the child component
             setName={setName}
             setAge={setAge}
@@ -140,21 +155,41 @@ function App() {
             weight={weight}
             bmi={bmi}
             message={message}
-            imgUrl={imgUrl}
-
+          imgUrl={imgUrl}
+          
+          // definie this function as a prop to the Height_weight component
           useGotData={(e) => {
             e.preventDefault();
             return (
               <div>
-              <h2>Patient Data 📫</h2>
-                {patient.map((post) => {
+                {Object.keys(allPatients).map((key) => {
+                  // return (<li >{`${value.name}:${value.bmi}`}</li>)
+                  console.log(allPatients);
+                  // console.log(`${ value.name }: ${value.bmi}`);
                   return (
-                      <div key={post.id}>
-                        <p>Name: {post.name}</p>
-                        <p>Age: {post.age}</p>
-                      </div>
-                  );
-                })}
+                    <Fragment >
+                      <ul>
+                        <li>
+                          <p>
+                            <b>{allPatients[key].id}:</b>
+                            {' ' + allPatients[key].name + ' '}
+                            {allPatients[key].bmi}
+                          </p>
+                        </li>
+                      </ul>
+                      {/* <div>
+                        <ul>
+                          {allPatients.map((list, idx) => (
+                            <li key={idx}>{list.id}| {list.name}</li>
+                          ))}
+                        </ul>
+                      </div> used this with the useEffect procedure... works as the one above it  */}
+                    </Fragment>
+                      
+                        )
+                })
+                }
+
               </div>
             );
             

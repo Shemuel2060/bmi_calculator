@@ -49,12 +49,11 @@ function HeightWeightInfo(props) {
                     </div><br/>
                 </form>
             </div>
-            <div className = 'output-data'>
-                <button onClick ={props.useGotData}>Get Patient Data</button>
-                <output>
-                    
-                </output>
+            <div className='patient_data'>
+                <button className='output-data' onClick={props.useGotData}>Get Patient Data</button>
             </div>
+            <h2 className='data-title-h2'>Display Patient Data 📃</h2>
+            <hr className = 'after-patient-data-h2'/>
             
         </div>
     )
