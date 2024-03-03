@@ -1,6 +1,5 @@
 import "./App.css";
-import { useState, useEffect, Fragment } from 'react';
-import axios from 'axios';
+import { useState, Fragment } from 'react';
 
 
 import HeightWeightInfo from "./components/metricData";
@@ -27,46 +26,9 @@ function App() {
   
   // console.log(`first bmi: ${bmi}`); // follow this value to see how it changed
   
-    const client = axios.create({
-  baseURL: "https://localhost:8080/patient/" 
-});  
 
-  const addpatient = (pName, pAge, pSex, pWeight,
-    pHeight, pBMI) => {
-      client
-         .post('http://localhost:8080/patient/addPatient', {
-            name: pName,
-            age: pAge,
-            sex: pSex,
-            weight: pWeight,
-            height: pHeight,
-            bmi: pBMI,
-         })
-         .then((response) => {
-            setPatient([response.data, ...patient]);
-         });
-    
-  }; // end of addpatient() function
-
-  // get data from endpoint when app loads
-  const url_getall = 'http://localhost:8080/patient/'; // base url
-
-    axios.get(`${url_getall}getAllPatients`)
-      .then((response) => {
-      allPatients = response.data // save data into this variable
-      })
-      .catch((error) => {
-      console.log(`ERROR: ${error}`)
-      })  
   
-  // this also works as the one above
-  
-  // useEffect(() => {
-  // axios.get(`${url_getall}getAllPatients`)
-  //   .then((response) => response.data)
-  //   .then((data) => setAllPatients(data))
-  //     .catch((error) => console.log(`ERROR: ${error}`))  
-  // });
+ 
  
     
     
@@ -78,8 +40,15 @@ function App() {
   return (
     <div className="App">
        <div className="title-container">
-        <h1 className="title-txt">BMI <br/>CALCULATOR</h1>
-      </div>
+         <h1 className="title-txt">BMI <br/>CALCULATOR</h1>
+         <p className='how-to-use-note'>
+            To use this app, enter in your name, ages, height in meters and
+            weight in kgs. Then submit. <br/>
+            You can reload the page with the reload button in which it clears
+            all your previous inputs and gives a fresh start!            
+         </p>
+         <h3 className="enjoy">Enjoy</h3>
+       </div>
      
       <div>
         <HeightWeightInfo
@@ -131,14 +100,6 @@ function App() {
                   // setBmi(bmi_val)
                 }
               }
-              if (bmi_val === 0) {
-                alert("invalid bmi value");
-              } else {
-                addpatient(name, age, sex, weight, height, bmi_val); // patient data to the database
-                // alert("Record Successfully commited to DB"); // for testing
-              }
-              
-              
             }           
               
           } // end of handleSubmit function
@@ -155,47 +116,7 @@ function App() {
             weight={weight}
             bmi={bmi}
             message={message}
-          imgUrl={imgUrl}
-          
-          // definie this function as a prop to the Height_weight component
-          useGotData={(e) => {
-            e.preventDefault();
-            return (
-              <div>
-                {Object.keys(allPatients).map((key) => {
-                  // return (<li >{`${value.name}:${value.bmi}`}</li>)
-                  console.log(allPatients);
-                  // console.log(`${ value.name }: ${value.bmi}`);
-                  return (
-                    <Fragment >
-                      <ul>
-                        <li>
-                          <p>
-                            <b>{allPatients[key].id}:</b>
-                            {' ' + allPatients[key].name + ' '}
-                            {allPatients[key].bmi}
-                          </p>
-                        </li>
-                      </ul>
-                      {/* <div>
-                        <ul>
-                          {allPatients.map((list, idx) => (
-                            <li key={idx}>{list.id}| {list.name}</li>
-                          ))}
-                        </ul>
-                      </div> used this with the useEffect procedure... works as the one above it  */}
-                    </Fragment>
-                      
-                        )
-                })
-                }
-
-              </div>
-            );
-            
-          }
-          
-          }          
+          imgUrl={imgUrl}        
           
           /><br/>
       </div>

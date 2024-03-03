@@ -48,13 +48,7 @@ function HeightWeightInfo(props) {
                         <img src={props.imgUrl} alt="" height="250px" />
                     </div><br/>
                 </form>
-            </div>
-            <div className='patient_data'>
-                <button className='output-data' onClick={props.useGotData}>Get Patient Data</button>
-            </div>
-            <h2 className='data-title-h2'>Display Patient Data 📃</h2>
-            <hr className = 'after-patient-data-h2'/>
-            
+            </div>            
         </div>
     )
 }
