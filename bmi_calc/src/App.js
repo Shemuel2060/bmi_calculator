@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, Fragment } from 'react';
+import { useState} from 'react';
 
 
 import HeightWeightInfo from "./components/metricData";
