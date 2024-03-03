@@ -20,22 +20,7 @@ function App() {
     const [bmi, setBmi] = useState('0');
     const [message, setMessage] = useState("")
     const [imgUrl, setImgUrl] = useState('');
-  const [patient, setPatient] = useState([]);
-  let allPatients={}; // all patients objects
-  // const [allPatients, setAllPatients] = useState([]);
-  
-  // console.log(`first bmi: ${bmi}`); // follow this value to see how it changed
-  
-
-  
  
- 
-    
-    
-  
-
-
-
 
   return (
     <div className="App">
